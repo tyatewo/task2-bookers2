@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
 
   def new
     @book = Book.new
@@ -9,7 +9,7 @@ class BooksController < ApplicationController
     @book_new = Book.new
     @book = Book.find(params[:id])
     @user = @book.user
-
+    @book_comment = BookComment.new
   end
 
   def index
