@@ -26,30 +26,28 @@ class User < ApplicationRecord
   end
 
 
-  def follow(user_id)
-    relationships.create(followed_id: user_id)
+  def follow(user)
+    relationships.create(followed_id: user.id)
   end
 
-  def unfollow(user_id)
-    relationships.find_by(followed_id: user_id).destroy
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id).destroy
   end
 
-  def following?(user_id)
-    followings.include?(user_id)
+  def following?(user)
+    followings.include?(user)
   end
 
 
-  def self.looks(search, word)
-    if search == "perfect_match"
-      @user = User.where("name LIKE?", "#{word}")
-    elsif search == "forward_match"
-      @user = User.where("name LIKE?", "#{word}%")
-    elsif search == "backward_match"
-      @user = User.where("name LIKE?", "%#{word}")
-    elsif search == "partial_match"
-      @user = User.where("name LIKE?", "%#{word}%")
+  def self.search_for(word,search)
+    if search == "perfect"
+      User.where(name: word)
+    elsif search == "forward"
+      User.where("name LIKE?", "#{word}%")
+    elsif search == "backward"
+      User.where("name LIKE?", "%#{word}")
     else
-      @user = User.all
+      User.where("name LIKE?", "%#{word}%")
     end
   end
 
