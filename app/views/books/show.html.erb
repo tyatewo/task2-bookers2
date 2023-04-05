@@ -25,23 +25,16 @@
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
-          <td id= "favorite">
+          <td id= "favorite-<%= @book.id %>">
           <%= render 'favorite', book: @book %>
           </td>
           <td>コメント数: <%= @book.book_comments.count %></td>
         </tr>
       </table>
 
-      <table>
-        <tbody id= "comment">
-         <%= render 'comment', book: @book %>
-        </tbody>
-      </table>
-
-           <%= form_with model: [@book,@book_comment], local: false do |f| %>
-           <td><%= f.text_area :comment, class: "form-control" %></td>
-           <td><%= f.submit "送信" %></td>
-          <% end %>
+        <div id= "comment">
+         <%= render 'comment', book: @book, book_comment: @book_comment %>
+        </div>
 
     </div>
 
