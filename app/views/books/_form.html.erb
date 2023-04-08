@@ -10,29 +10,38 @@
 
 
   <div class="form-group">
-    <%= f.label :tag %>
-    <%= f.text_field :name, class: 'form-control tag_name' %>
+    <%= f.label "Tag" %>
+    <%= f.text_field :tag_name, class: 'form-control tag_name' %>
   </div>
 
 
-  <div id="post_raty" id="score">
-    <%= f.label :rate, 'Rate',class:"" %>
-    <%= f.hidden_field :rate, id: :score %>
-  </div>
+  <% if book.id.nil? %>
+    <div class= "form-group" id="star">
+      <%= f.label :rate %>
+      <%= f.hidden_field :rate, id: :review_star, class: 'form-control' %>
+      <div id="post_raty"></div>
+    </div>
 
-  <script>
-    // scriptファイルをどのidの部分に配置するかを指定
-    $('#score').empty();
-    $('#score').raty({
-      size: 36,
-      starOff: '<%= asset_path('star-off.png') %>',
-      starOn: '<%= asset_path('star-on.png') %>',
-      score: <%= book.score %>,
-      scoreName: 'book[score]',
-      half: false,
-     });
-  </script>
+    <script>
+      $(document).on('turbolinks:load', function(){
+        let elem = document.querySelector('#post_raty');
+        if (elem == null) return;
 
+        elem.innerHTML = ""
+        let opt = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          scoreName: 'book[rate]',
+        };
+        raty(elem, opt);
+      });
+    </script>
+  <% else %>
+    <div class= "form-group">
+      <%= render "static_rate", book: book %>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>

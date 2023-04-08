@@ -14,7 +14,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    @books = Book.all
+    @books = Book.all.order(params[:sort])
     @user = User.all
 
     if params[:latest]
@@ -32,12 +32,6 @@ class BooksController < ApplicationController
     @book.user_id = current_user.id
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
-
-      tag_list =params[:tag_name].split(",")
-        if @book.save
-           @book.save_books(tag_list)
-        end
-
     else
       @books = Book.all
       render :index
@@ -69,7 +63,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :score)
+    params.require(:book).permit(:title, :body, :rate)
   end
 
   def is_matching_login_user

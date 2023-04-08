@@ -27,21 +27,7 @@
 
         <td>コメント数: <%= "#{book.book_comments.count}" %></td>
 
-        <td>
-        <div id= "score-rate-<%= book.id %>"></div>
-          <script>
-          $('#score-rate-<%= book.id %>').empty();
-          $('#score-rate-<%= book.id %>').raty({
-            size: 36,
-            starOff: '<%= asset_path('star-off.png') %>',
-            starOn: '<%= asset_path('star-on.png') %>',
-            score: <%= book.score %>,
-            scoreName: 'book[score]',
-            readOnry: true,
-            half: false,
-          });
-          </script>
-        </td>
+        <td><%= render "books/static_rate", book: book %></td>
 
         <td><% l book.created_at %></td>
 
