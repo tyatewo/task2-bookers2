@@ -32,10 +32,19 @@ class BooksController < ApplicationController
     @book.user_id = current_user.id
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
+
+      tag_list =params[:tag_name].split(",")
+        if @book.save
+           @book.save_books(tag_list)
+        end
+
     else
       @books = Book.all
       render :index
     end
+
+
+
   end
 
   def edit

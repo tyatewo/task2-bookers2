@@ -9,6 +9,12 @@
   </div>
 
 
+  <div class="form-group">
+    <%= f.label :tag %>
+    <%= f.text_field :name, class: 'form-control tag_name' %>
+  </div>
+
+
   <div id="post_raty" id="score">
     <%= f.label :rate, 'Rate',class:"" %>
     <%= f.hidden_field :rate, id: :score %>
