@@ -16,20 +16,12 @@ class BooksController < ApplicationController
     @book = Book.new
     @books = Book.all.order(params[:sort])
     @user = User.all
-
-    if params[:latest]
-      @books = Book.latest
-    elsif params[:score_count]
-      @books = Book.score_count
-    else
-      @books = Book.all
-    end
-
   end
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    tag = params[:book][:name].split(',')
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
