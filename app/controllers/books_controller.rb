@@ -16,6 +16,15 @@ class BooksController < ApplicationController
     @book = Book.new
     @books = Book.all
     @user = User.all
+
+    if params[:latest]
+      @books = Book.latest
+    elsif params[:score_count]
+      @books = Book.score_count
+    else
+      @books = Book.all
+    end
+
   end
 
   def create
@@ -51,7 +60,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :score)
   end
 
   def is_matching_login_user
